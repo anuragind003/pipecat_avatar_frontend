@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ambilio Avatar Frontend
+
+This is the **Next.js frontend** for the Ambilio Avatar application, built with [Pipecat AI](https://github.com/pipecat-ai/pipecat)'s UI kit. It provides a real-time WebRTC interface for interacting with a lip-synced avatar.
+
+## Features
+
+- **WebRTC**: Real-time communication for low-latency interactions.
+- **Voice UI**: Ready-to-use Pipecat UI components for voice/video.
+- **Next.js**: Modern React framework for high performance.
+- **Dynamic Connection**: Connects to the Pipecat backend server automatically.
+
+## Prerequisites
+
+- Node.js 18+
+- [npm](https://www.npmjs.com/) (recommended) or `yarn`
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies**:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   ```bash
+   cd frontend
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Configure Environment**:
+   Create a `.env.local` file in the `frontend/` directory (optional):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```ini
+   NEXT_PUBLIC_BOT_HOST=http://localhost:7860
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   _Note: If not set, it defaults to `http://localhost:7860`._
 
-## Learn More
+3. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `src/app/page.tsx`: Main entry point setting up `<PipecatAppBase>`.
+- `src/app/components/App.tsx`: Main application UI handling connection states.
+- `public/`: Static assets.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Integration
 
-## Deploy on Vercel
+The frontend connects to the backend at `${NEXT_PUBLIC_BOT_HOST}/start`. The backend receives a `transport: "webrtc"` parameter to initialize the session.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Microphone Access**: Ensure your browser has permission to access the microphone for STT to work.
+- **Camera Access**: If the backend is configured for video-in, camera access will be requested.
+- **Tailwind CSS**: Uses Tailwind v4 for styling.
