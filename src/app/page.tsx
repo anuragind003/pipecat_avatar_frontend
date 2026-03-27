@@ -16,20 +16,15 @@ import "@pipecat-ai/voice-ui-kit/styles";
 
 export default function Home() {
   // Use bot URL from environment or fallback to standard pipecat locahost setup
-  const botURL = process.env.NEXT_PUBLIC_BOT_HOST || "http://localhost:7860";
+  const botURL = process.env.NEXT_PUBLIC_BOT_HOST || "http://localhost:8000";
 
   return (
     <ThemeProvider>
       <FullScreenContainer>
         <PipecatAppBase
           transportType="smallwebrtc"
-          startBotParams={{
-            endpoint: `${botURL}/start`,
-            requestData: {
-              createDailyRoom: false,
-              enableDefaultIceServers: true,
-              transport: "webrtc",
-            },
+          connectParams={{
+            webrtcUrl: `${botURL}/offer`,
           }}
           transportOptions={{
             waitForICEGathering: true,
