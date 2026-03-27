@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import {
   FullScreenContainer,
   ThemeProvider,
@@ -17,6 +18,20 @@ import "@pipecat-ai/voice-ui-kit/styles";
 export default function Home() {
   // Use bot URL from environment or fallback to standard pipecat locahost setup
   const botURL = process.env.NEXT_PUBLIC_BOT_HOST || "http://localhost:8000";
+
+  // Wake up the backend on page load to eliminate Render cold start delays
+  useEffect(() => {
+    const wakeBackend = async () => {
+      try {
+        await fetch(`${botURL}/health`);
+        console.log("Backend warmed up");
+      } catch (error) {
+        console.log("Wake up request to backend failed or pending...");
+      }
+    };
+
+    wakeBackend();
+  }, [botURL]);
 
   return (
     <ThemeProvider>
